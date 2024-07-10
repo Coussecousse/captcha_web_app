@@ -75,7 +75,7 @@ class CaptchaType extends AbstractType
                 new Captcha()
             ], 
             'error_bubbling' => false,
-            'route' => 'http://127.0.0.1:8000/captcha/api/',
+            'route' => 'http://127.0.0.1:8000/captcha/api',
             ... $puzzleOptions
         ]);
         

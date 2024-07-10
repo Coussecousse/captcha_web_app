@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}S'enregistrer{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="screen">
+        <div class="screen__content">
+            <h1 class="">S'enregistrer</h1>
+
+            {% if app.user %}
+                <div class="mb-3" style="text-align: center; margin-top: 1rem;">
+                Vous êtes connecté comme {{ app.user.userIdentifier }},<br> <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                </div>
+            {% endif %}
+			{{ form_start(form, { method: 'POST', attr: {'class': 'login'}}) }}
+                <div class="form__error">
+                    {{ form_errors(form) }}	
+                </div>
+				<div class="login__field">
+					<i class="login__icon fas fa-user"></i>
+
+					{{ form_widget(form.username) }}
+					{{ form_errors(form.username) }}
+				</div>
+				<div class="login__field">
+					<i class="login__icon fas fa-lock"></i>
+
+					{{ form_widget(form.password) }}
+					{{ form_errors(form.password) }}
+				</div>
+				<div class="form-group">
+					{{ form_row(form.captcha) }}
+					<div class="form__error">
+						{{ form_errors(form.captcha) }}
+					</div>	
+				</div>
+				{{ form_rest(form) }}
+				<button class="button login__submit" type="submit">
+					<span class="button__text">S'inscrire</span>
+					<i class="button__icon fas fa-chevron-right"></i>
+				</button>			
+			{{ form_end(form) }}
+		</div>
+		<div class="screen__background">
+			<span class="screen__background__shape screen__background__shape4"></span>
+			<span class="screen__background__shape screen__background__shape3"></span>		
+			<span class="screen__background__shape screen__background__shape2"></span>
+			<span class="screen__background__shape screen__background__shape1"></span>
+		</div>		
+	</div>
+</div>
+{% endblock %}

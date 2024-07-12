@@ -19,5 +19,5 @@ class Captcha extends Constraint
 
     public string $emptyResponse = 'Veuillez remplir le captcha';
 
-
+    public string $notAllowedToConnect = "Vous n'êtes pas autorisé à vous connecter à l'API";
 }

@@ -21,6 +21,18 @@ class CaptchaValidator extends ConstraintValidator
      */
     public function validate(mixed $value, Constraint $constraint): void
     {
+        // Check if we can connect to the api
+        $ConnectionnLink = 'http://127.0.0.1:8000/captcha/connect?user_key=' . $value['user_key'];
+
+        $response = $this->httpClient->request('GET', $ConnectionnLink);
+        $response = $response->toArray();
+
+        if (!$response['valid']) {
+            $this->context->buildViolation($constraint->notAllowedToConnect)
+                ->addViolation();
+                return;
+        }
+
         // Check if the value isn't blank
         foreach($value as $val) {
             if (null === $val || '' === $val) {

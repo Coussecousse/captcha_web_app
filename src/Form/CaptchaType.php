@@ -34,7 +34,9 @@ class CaptchaType extends AbstractType
             'piecesNumber' => 3,
             'puzzleBar' => 'bottom',
             'spaceBetweenPieces' => 50,
-            'precision' => 10
+            'precision' => 10,
+            'user_key' => 'e93551c289696e1504a7d72ac0f24d99408fbe089f9acac624b9c7c8096ee842'
+            // 'user_key' => ''
         ];
 
         // Set the key in the session to avoid new key regeneration
@@ -65,7 +67,6 @@ class CaptchaType extends AbstractType
             $params = $this->httpClient->request('GET', $link);
             $params = $params->toArray();
 
-
             $response = [...$params, 'key' => $key];
         }
         
@@ -78,14 +79,6 @@ class CaptchaType extends AbstractType
             'route' => 'http://127.0.0.1:8000/captcha/api',
             ... $puzzleOptions
         ]);
-        
-        foreach ($response as $key => $value) {
-            $options[$key] = $value;
-            $resolver->setDefaults([
-                $key => $value,
-
-            ]);
-        }
 
         parent::configureOptions($resolver);
     }
@@ -100,7 +93,10 @@ class CaptchaType extends AbstractType
                 'class' => 'captcha-challenge', 
             ],
             'data' => $options['key']
-        ]);
+        ])
+            ->add('user_key', HiddenType::class, [
+                'data' => $options['user_key']
+            ]);
 
         for ($i = 1; $i <= $options['piecesNumber']; $i++) {
             $builder->add('answer_'.($i), HiddenType::class, [
@@ -109,6 +105,7 @@ class CaptchaType extends AbstractType
                 ],
             ]);
         }
+
 
         parent::buildForm($builder, $options);
     }
